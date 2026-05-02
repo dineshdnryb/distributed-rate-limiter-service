@@ -7,10 +7,10 @@ A production-grade distributed rate limiting system built using Spring Boot and 
 
 ## Architecture Diagram
 
-![Architecture Diagram](<your-image-link-or-export>)
+![Architecture Diagram](./docs/DistributedRateLimiting_v1.png)
 
 Or view editable diagram:
-[Open in Excalidraw](your-link)
+[Open in Excalidraw](https://excalidraw.com/#json=euAq5qziIBuD7gbBwefY8,m70cVKbQbdPVi85_vI7yHA)
 
 ---
 
@@ -40,4 +40,4 @@ Or view editable diagram:
 ---
 
 ## Project Status
-🚧 In Progress
+  In Progress
