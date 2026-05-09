@@ -1,7 +1,14 @@
 # Distributed Rate Limiting Service
 
 ## Overview
-A production-grade distributed rate limiting system built using Spring Boot and Redis to enforce API request quotas across horizontally scaled services.
+
+A distributed rate limiting system being built using Spring Boot and Redis to enforce API request quotas across scalable backend services.
+
+Current implementation includes:
+- Spring Boot REST APIs
+- Fixed Window rate limiting algorithm
+- Configurable in-memory policies
+- Per-client + per-API request throttling
 
 ---
 
@@ -9,36 +16,25 @@ A production-grade distributed rate limiting system built using Spring Boot and 
 
 ![Architecture Diagram](docs/distributedRateLimiting_v1.png)
 
-
-Or view editable diagram:
+Editable version:
 [Open in Excalidraw](https://excalidraw.com/#json=euAq5qziIBuD7gbBwefY8,m70cVKbQbdPVi85_vI7yHA)
 
 ---
 
-## Key Concepts
-- Stateless limiter nodes
-- Centralized Redis state
-- Atomic rate limiting via Lua
-- Horizontal scalability
+## Current Features
+
+- Fixed Window rate limiting
+- Configurable API policies
+- Request quota enforcement
+- HTTP 429 response for rejected requests
+- Structured request/response DTOs
+- Layered Spring Boot architecture
 
 ---
 
-## Tech Stack
-- Java / Spring Boot
-- Redis
-- Docker
-- Prometheus + Grafana
-- k6
+## Example API
 
----
+### Request
 
-## Features (Planned)
-- Fixed Window / Sliding Window / Token Bucket
-- Distributed enforcement
-- Benchmarking suite
-- Observability dashboard
-
----
-
-## Project Status
-  In Progress
+```http
+POST /api/v1/rate-limit/check

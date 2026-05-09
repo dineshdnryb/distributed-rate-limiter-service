@@ -2,10 +2,9 @@ package com.dinesh.ratelimiter.model;
 
 import lombok.Getter;
 
+@Getter
 public class FixedWindowCounter {
-    @Getter
     private int requestCount;
-    @Getter
     private long windowStartTimeMS;
 
     public FixedWindowCounter(int requestCount,long windowStartTimeMS){
