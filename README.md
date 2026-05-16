@@ -32,6 +32,42 @@ Editable version:
 
 ---
 
+## Current Architecture Flow
+
+Client Request
+    ↓
+Spring Boot Controller
+    ↓
+RateLimitService
+    ↓
+RedisRateLimitService
+    ↓
+Redis (shared state)
+
+---
+
+## Known Limitations
+
+Current implementation performs multiple Redis operations separately.
+
+Potential issues:
+
+- non-atomic request handling
+- race conditions under concurrency
+- multiple network round trips
+
+Future improvement:
+
+Move throttling logic into Redis Lua scripts for atomic execution.
+
+---
+
+## Project Status
+
+v0.2 Redis Fixed Window Completed
+
+---
+
 ## Example API
 
 ### Request
