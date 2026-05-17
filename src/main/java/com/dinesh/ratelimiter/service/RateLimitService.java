@@ -1,14 +1,11 @@
 package com.dinesh.ratelimiter.service;
 
-import com.dinesh.ratelimiter.controller.RedisRateLimitService;
-import com.dinesh.ratelimiter.model.FixedWindowCounter;
 import com.dinesh.ratelimiter.dto.RateLimitCheckRequest;
 import com.dinesh.ratelimiter.dto.RateLimitCheckResponse;
 import com.dinesh.ratelimiter.model.RateLimitPolicy;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 @Service
 public class RateLimitService {
@@ -27,27 +24,20 @@ public class RateLimitService {
         int limit=rateLimitPolicy.getLimit();
         long windowSizeMs=rateLimitPolicy.getWindowSizeMs();
 
-        Long count=rateLimitService.incrementRequestCount(key,windowSizeMs);
+        List resultFromScript=rateLimitService.executeRateLimitScript(
+                key,rateLimitPolicy.getLimit(),windowSizeMs);
 
+        boolean allowed = ((Long) resultFromScript.get(0)) == 1;
+        int remaining = ((Long) resultFromScript.get(1)).intValue();
+        long retryAfterMs = ((Long) resultFromScript.get(2));
 
-        if(count<=limit){
-            return new RateLimitCheckResponse(
-                    rateLimitCheckRequest.getAlgorithm(),
-                    0,
-                    limit-count.intValue(),
-                    true);
-        }
-
-        Long TTLValidation = rateLimitService.getRemainingTtlMs(key);
 
         return new RateLimitCheckResponse(
                 rateLimitCheckRequest.getAlgorithm(),
-                TTLValidation,
-                0,
-                false
+                retryAfterMs,
+                remaining,
+                allowed
         );
-
-
 
 
     };
